@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [items, setItems] = useState([]);
+  const [text, setText] = useState("");
+
+  function handleChange(e) {
+    setText(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setItems([...items, text]);
+    setText("");
+  }
+
+  function handleRemove(index) {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    setItems(newItems);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='shopping-list'>
+      <h2>Boodschappenlijstje</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          value={text}
+          onChange={handleChange}
+          placeholder='Item toevoegen'
+        />
+        <button className='add' type='submit'>
+          Toevoegen
+        </button>
+      </form>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            <span>{item}</span>
+            <button className='remove' onClick={() => handleRemove(index)}>
+              Verwijder
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
