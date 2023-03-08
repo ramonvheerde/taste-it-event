@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import Button from "./components/components/Button";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -31,17 +32,18 @@ function App() {
           onChange={handleChange}
           placeholder='Item toevoegen'
         />
-        <button className='add' type='submit'>
-          Toevoegen
-        </button>
+        <Button title={"Toevoegen"} classname={"add"} type={"submit"} />
       </form>
       <ul>
         {items.map((item, index) => (
           <li key={index}>
             <span>{item}</span>
-            <button className='remove' onClick={() => handleRemove(index)}>
-              Verwijder
-            </button>
+            <Button
+              title={"Verwijder"}
+              classname={"remove"}
+              type={"button"}
+              onClick={() => handleRemove(index)}
+            />
           </li>
         ))}
       </ul>
